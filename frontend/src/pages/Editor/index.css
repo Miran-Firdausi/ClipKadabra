@@ -1,0 +1,23 @@
+.editor-page {
+  display: flex;
+  height: 100vh;
+  background-color: #1e1e1e;
+  width: 100vw;
+}
+
+.main-editor {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.placeholder {
+  color: #ccc;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 20px;
+}
