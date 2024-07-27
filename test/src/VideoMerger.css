@@ -1,0 +1,93 @@
+/* Container for the video processor component */
+.video-processor {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Styling for headings */
+.video-processor h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Controls section styling */
+.controls {
+    margin-bottom: 20px;
+}
+
+/* Label for file input */
+.input-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* File input styling */
+.input-label input[type="file"] {
+    display: none; /* Hide the default file input */
+}
+
+/* Button to trigger file input */
+.select-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Button to process video */
+.process-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Styling for loading and error states */
+.process-button[disabled] {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.error {
+    color: #dc3545;
+    margin: 20px 0;
+}
+
+/* Container for the video display */
+.video-container {
+    margin-top: 20px;
+}
+
+/* Styling for video elements */
+video {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+
+/* Progress bar styling (if you add one in future) */
+.progress-bar {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress-bar-fill {
+    height: 5px;
+    background-color: #007bff;
+    width: 0;
+    transition: width 0.4s ease;
+}

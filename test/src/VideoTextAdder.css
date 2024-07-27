@@ -1,0 +1,97 @@
+/* Container for the entire video text adder component */
+.video-processor {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Heading styles */
+.video-processor h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Controls section styling */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Label for file input */
+.input-label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* File input button styling */
+.select-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.select-button:hover {
+    background-color: #0056b3;
+}
+
+/* Text input controls styling */
+.text-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.text-controls label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+
+.text-controls input[type="text"],
+.text-controls input[type="number"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Process button styling */
+.process-button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.process-button:hover {
+    background-color: #218838;
+}
+
+/* Error message styling */
+.error {
+    color: #dc3545;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Video container styling */
+.video-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.video-container video {
+    max-width: 100%;
+    height: auto;
+}
