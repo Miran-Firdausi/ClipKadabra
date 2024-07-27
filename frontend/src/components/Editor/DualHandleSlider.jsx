@@ -10,8 +10,6 @@ const DualHandleSlider = ({ maxLimit }) => {
     setValues([values[0], maxLimit]);
   }, [maxLimit]);
 
-  console.log("max:", maxLimit);
-
   return (
     <div>
       <Range
@@ -79,7 +77,7 @@ const DualHandleSlider = ({ maxLimit }) => {
           </div>
         )}
       />
-      <p>Selected range: {values[0].toFixed(2)} - {values[1].toFixed(2)}</p>
+      <p>{values[0].toFixed(2)} - {values[1].toFixed(2)}</p>
     </div>
   );
 };

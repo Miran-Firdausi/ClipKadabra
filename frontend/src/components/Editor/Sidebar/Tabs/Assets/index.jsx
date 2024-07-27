@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useSelectedAssets } from "@/context/SelectedAssetsContext";
@@ -6,20 +6,44 @@ import "./index.css";
 
 const Assets = () => {
   const [assets, setAssets] = useState([]);
-  const { selectedAssets, setSelectedAssets } = useSelectedAssets();
+  const { selectedAssets, setSelectedAssets, setTotalDuration } = useSelectedAssets();
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const files = Array.from(event.target.files);
-    const newAssets = files.map((file) => ({
-      name: file.name,
-      url: URL.createObjectURL(file),
-      type: file.type,
-    }));
+    const newAssetsPromises = files.map(async (file) => {
+      const url = URL.createObjectURL(file);
+      let duration = 0;
+
+      if (file.type.startsWith("video")) {
+        const video = document.createElement("video");
+        video.src = url;
+
+        // Wait for metadata to be loaded
+        await new Promise((resolve) => {
+          video.onloadedmetadata = () => {
+            duration = video.duration;
+            resolve();
+          };
+        });
+      }
+
+      return {
+        name: file.name,
+        url,
+        type: file.type,
+        duration: duration || 10, // Default duration for non-video files
+      };
+    });
+
+    const newAssets = await Promise.all(newAssetsPromises);
     setAssets([...assets, ...newAssets]);
   };
 
   const handleAddToTimeline = (asset) => {
-    setSelectedAssets((prevAssets) => [...prevAssets, asset]);
+    setSelectedAssets((prevAssets) => {
+      const newAssets = [...prevAssets, asset];
+      return newAssets;
+    });
   };
 
   const handleDeleteAsset = (index) => {

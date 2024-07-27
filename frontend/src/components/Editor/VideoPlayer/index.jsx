@@ -1,4 +1,3 @@
-// VideoPlayer.js
 import React, { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
@@ -6,85 +5,82 @@ import { useSelectedAssets } from "@/context/SelectedAssetsContext";
 import "./index.css";
 
 const VideoPlayer = () => {
-  const videoRef = useRef(null);
+  const videoRefs = useRef([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
-  const [playAll, setPlayAll] = useState(false);
-  const { selectedAssets, currentIndex, setCurrentIndex } = useSelectedAssets();
-  const [videoSrc, setVideoSrc] = useState(null);
+  const { selectedAssets, currentIndex, setCurrentIndex, setCurrentTime } = useSelectedAssets();
 
   useEffect(() => {
-    // Update video source when selectedAssets or currentIndex changes
-    if (selectedAssets.length > 0) {
-      setVideoSrc(selectedAssets[currentIndex].url);
-    } else {
-      setVideoSrc(null);
-    }
-  }, [selectedAssets, currentIndex]);
-
-  useEffect(() => {
-    if (videoRef.current) {
-      if (playAll && isPlaying) {
-        videoRef.current.play().catch(error => {
-          console.error("Error playing video:", error);
-        });
-      } else {
-        videoRef.current.pause();
-      }
-    }
-  }, [videoSrc, playAll, isPlaying]);
+    videoRefs.current = videoRefs.current.slice(0, selectedAssets.length);
+  }, [selectedAssets.length]);
 
   const handlePlayPause = () => {
     if (selectedAssets.length === 0) return;
 
-    if (playAll) {
-      // If already playing all, stop playback
-      videoRef.current.pause();
+    if (isPlaying) {
+      videoRefs.current.forEach(video => video.pause());
       setIsPlaying(false);
-      setPlayAll(false);
     } else {
-      // Start playback for the current video
-      videoRef.current.play().catch(error => {
+      playVideo(currentIndex);
+      setIsPlaying(true);
+    }
+  };
+
+  const playVideo = (index) => {
+    if (index >= selectedAssets.length) return;
+    
+    const currentVideo = videoRefs.current[index];
+    if (currentVideo) {
+      currentVideo.play().catch(error => {
         console.error("Error playing video:", error);
       });
-      setIsPlaying(true);
-      setPlayAll(true);
+
+      currentVideo.onended = () => {
+        const nextIndex = (index + 1) % selectedAssets.length;
+        setCurrentIndex(nextIndex);
+        playVideo(nextIndex);
+      };
+
+      currentVideo.ontimeupdate = () => {
+        let totalTime = 0;
+        for (let i = 0; i < index; i++) {
+          totalTime += selectedAssets[i].duration;
+        }
+        setCurrentTime(totalTime + currentVideo.currentTime);
+      };
     }
   };
 
   const handleVolumeChange = (event) => {
     const newVolume = event.target.value;
-    if (videoRef.current) {
-      videoRef.current.volume = newVolume;
-    }
+    videoRefs.current.forEach(video => video.volume = newVolume);
     setVolume(newVolume);
-  };
-
-  const handleEnded = () => {
-    if (playAll && selectedAssets.length > 0) {
-      const nextIndex = (currentIndex + 1) % selectedAssets.length;
-      setCurrentIndex(nextIndex);
-    }
   };
 
   return (
     <div className="video-player">
       <div className="video-container">
-        {videoSrc ? (
+        {selectedAssets.map((asset, index) => (
           <video
-            ref={videoRef}
+            key={index}
+            ref={el => videoRefs.current[index] = el}
             className="video"
+            src={asset.url}
             controls={false}
-            src={videoSrc}
-            onEnded={handleEnded}
+            muted={false}
+            style={{ 
+              position: 'absolute', 
+              top: 0, 
+              left: 0, 
+              width: '100%', 
+              height: '100%', 
+              objectFit: 'cover',
+              opacity: index === currentIndex ? 1 : 0,
+            }}
           >
             Your browser does not support the video tag.
           </video>
-        ) : (
-          <div className="placeholder">
-            Add video to the timeline to see the preview
-          </div>
-        )}
+        ))}
       </div>
 
       <div className="controls">
