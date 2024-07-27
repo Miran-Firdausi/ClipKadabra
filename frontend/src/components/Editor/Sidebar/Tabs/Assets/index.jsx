@@ -52,7 +52,7 @@ const Assets = () => {
               )}
               <div className="overlay">
                 <button
-                  onClick={() => handleAddToTimeline(asset)}
+                  onClick={() => handleAddToTimeline(asset)} // Change: Add asset to timeline
                   className="icon-button"
                 >
                   <FontAwesomeIcon icon={faPlus} />
