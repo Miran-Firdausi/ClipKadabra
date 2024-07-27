@@ -1,3 +1,4 @@
+// VideoPlayer.js
 import React, { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
@@ -8,31 +9,46 @@ const VideoPlayer = () => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
-  const { selectedAssets } = useSelectedAssets();
-  const [videoSrc, setVideoSrc] = useState(null); // Added state for video source
+  const [playAll, setPlayAll] = useState(false);
+  const { selectedAssets, currentIndex, setCurrentIndex } = useSelectedAssets();
+  const [videoSrc, setVideoSrc] = useState(null);
 
   useEffect(() => {
+    // Update video source when selectedAssets or currentIndex changes
     if (selectedAssets.length > 0) {
-      // Find the first video asset
-      const videoAsset = selectedAssets.find(asset => asset.type.startsWith("video"));
-      if (videoAsset) {
-        setVideoSrc(videoAsset.url);
-      } else {
-        setVideoSrc(null);
-      }
+      setVideoSrc(selectedAssets[currentIndex].url);
     } else {
       setVideoSrc(null);
     }
-  }, [selectedAssets]); // Update videoSrc when selectedAssets change
+  }, [selectedAssets, currentIndex]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (playAll && isPlaying) {
+        videoRef.current.play().catch(error => {
+          console.error("Error playing video:", error);
+        });
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [videoSrc, playAll, isPlaying]);
 
   const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
+    if (selectedAssets.length === 0) return;
+
+    if (playAll) {
+      // If already playing all, stop playback
+      videoRef.current.pause();
+      setIsPlaying(false);
+      setPlayAll(false);
+    } else {
+      // Start playback for the current video
+      videoRef.current.play().catch(error => {
+        console.error("Error playing video:", error);
+      });
+      setIsPlaying(true);
+      setPlayAll(true);
     }
   };
 
@@ -44,14 +60,24 @@ const VideoPlayer = () => {
     setVolume(newVolume);
   };
 
-  console.log("rendered")
+  const handleEnded = () => {
+    if (playAll && selectedAssets.length > 0) {
+      const nextIndex = (currentIndex + 1) % selectedAssets.length;
+      setCurrentIndex(nextIndex);
+    }
+  };
 
   return (
     <div className="video-player">
       <div className="video-container">
         {videoSrc ? (
-          <video ref={videoRef} className="video" controls={false}>
-            <source src={videoSrc} type="video/mp4" />
+          <video
+            ref={videoRef}
+            className="video"
+            controls={false}
+            src={videoSrc}
+            onEnded={handleEnded}
+          >
             Your browser does not support the video tag.
           </video>
         ) : (
