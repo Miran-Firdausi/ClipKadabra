@@ -12,10 +12,13 @@ const DualHandleSlider = ({ maxLimit, onChange }) => {
     setValues([values[0], maxLimit]);
   }, [maxLimit]);
 
+<<<<<<< HEAD
   useEffect(() => {
     onChange({ min: values[0], max: values[1] });
   }, [values, onChange]);
 
+=======
+>>>>>>> 15c8811638fcd74982f2a6c7deb40f9acca6471b
   return (
     <div>
       <Range
@@ -83,7 +86,7 @@ const DualHandleSlider = ({ maxLimit, onChange }) => {
           </div>
         )}
       />
-      <p>Selected range: {values[0].toFixed(2)} - {values[1].toFixed(2)}</p>
+      <p>{values[0].toFixed(2)} - {values[1].toFixed(2)}</p>
     </div>
   );
 };

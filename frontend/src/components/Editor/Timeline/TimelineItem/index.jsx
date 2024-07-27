@@ -8,7 +8,16 @@ import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile } from '@ffmpeg/util';
 import "./index.css";
 
-const TimelineItem = ({ item, index, updateTimelineItem, isActive, onClick, deleteTimelineItem, shiftLeft, shiftRight }) => {
+const TimelineItem = ({
+  item,
+  index,
+  updateTimelineItem,
+  isActive,
+  onClick,
+  deleteTimelineItem,
+  shiftLeft,
+  shiftRight,
+}) => {
   const [frames, setFrames] = useState([]);
   const [videoDuration, setVideoDuration] = useState(1);
   const [trimStart, setTrimStart] = useState(0);
@@ -30,7 +39,6 @@ const TimelineItem = ({ item, index, updateTimelineItem, isActive, onClick, dele
 
       setVideoDuration(video.duration);
       setTrimEnd(video.duration);
-      console.log("Video duration:", video.duration);
 
       await video.play();
 
@@ -40,7 +48,9 @@ const TimelineItem = ({ item, index, updateTimelineItem, isActive, onClick, dele
 
       video.pause();
 
-      for (let time = 0; time < video.duration; time += video.duration / 8) {
+      var numberOfFrames = video.duration*0.5
+
+      for (let time = 0; time < video.duration; time += video.duration / numberOfFrames) {
         video.currentTime = time;
         await new Promise((resolve) => (video.onseeked = resolve));
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -105,7 +115,11 @@ const TimelineItem = ({ item, index, updateTimelineItem, isActive, onClick, dele
     <div
       ref={itemRef}
       className="timeline-item"
-      style={{ left: `${item.startTime * 10}px` }}
+      style={{
+        left: `${item.startTime * 10}px`,
+        minWidth: videoDuration * 100 + `px`,
+        maxWidth: videoDuration * 100 + `px`,
+      }}
       onClick={() => onClick(index)}
     >
       <div className="video-preview-container">

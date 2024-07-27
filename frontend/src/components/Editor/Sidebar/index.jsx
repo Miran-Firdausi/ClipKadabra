@@ -4,10 +4,9 @@ import Effects from "./Tabs/Effects";
 import Text from "./Tabs/Text";
 import Audio from "./Tabs/Audio";
 import Export from "./Tabs/Export";
-import { useSelectedAssets } from "@/context/SelectedAssetsContext";
 import "./index.css";
 
-const Sidebar = ({ setSelectedVideo }) => {
+const Sidebar = () => {
   const [activeTab, setActiveTab] = useState("assets");
 
 

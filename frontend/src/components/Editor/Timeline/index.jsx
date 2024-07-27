@@ -1,21 +1,12 @@
-// Timeline.js
 import React, { useState, useEffect } from "react";
 import "./index.css";
 import TimelineItem from "./TimelineItem";
 import { useSelectedAssets } from "@/context/SelectedAssetsContext";
 
 const Timeline = () => {
-  const { selectedAssets, setSelectedAssets, setCurrentIndex } = useSelectedAssets();
+  const { selectedAssets, setSelectedAssets, setCurrentIndex, totalDuration, setTotalDuration, timeIntervals, setTimeIntervals, currentTime } = useSelectedAssets();
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const handleAddToTimeline = (asset) => {
-    const startTime = selectedAssets.reduce(
-      (sum, asset) => sum + asset.duration,
-      0,
-    );
-    const newAsset = { ...asset, startTime, duration: 10 }; 
-    setSelectedAssets([...selectedAssets, newAsset]);
-  };
 
   const deleteTimelineItem = (index) => {
     setSelectedAssets(selectedAssets.filter((_, i) => i !== index));
@@ -52,10 +43,60 @@ const Timeline = () => {
     };
   }, []);
 
+  const generateTimeIntervals = (totalDuration) => {
+    const intervals = [];
+    for (let i = 0; i <= totalDuration; i++) {
+      intervals.push(i);
+    }
+    return intervals;``
+  };
+
+  const calculateTotalDuration = () => {    
+    var duration = 0
+    for (var i = 0; i < selectedAssets.length; i++) {
+      duration += selectedAssets[i].duration;
+    }
+    return duration;
+  };
+
+  useEffect(() => {
+    const totalDuration = calculateTotalDuration();
+    const timeIntervals = generateTimeIntervals(totalDuration);
+    setTotalDuration(totalDuration);
+    setTimeIntervals(timeIntervals);
+
+  }, [selectedAssets, setTotalDuration, setTimeIntervals]);
+
+  const seekerPosition = () => {
+    let position = 0;
+    for (let i = 0; i < selectedAssets.length; i++) {
+      if (position + selectedAssets[i].duration > currentTime) {
+        return position + currentTime - position;
+      }
+      position += selectedAssets[i].duration;
+    }
+    return currentTime;
+  };
+
   return (
     <div className="timeline-container">
       <h2>Timeline</h2>
       <div className="timeline">
+        <div className="time-interval">
+          {timeIntervals.map((interval, index) => (
+            <div
+              key={index}
+              className="time-interval-marker"
+              style={{ left: `${interval * 100}px` }}
+            >
+              {interval}s
+            </div>
+          ))}
+        </div>
+        <div 
+          className="seeker-cursor"
+          style={{ left: `${10+seekerPosition() * 100}px` }}
+        />
         {selectedAssets.map((asset, index) => (
           <TimelineItem
             key={index}
