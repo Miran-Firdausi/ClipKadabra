@@ -1,0 +1,105 @@
+/* VideoProcessor.css */
+
+.video-processor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.select-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.select-button:hover {
+    background-color: #0056b3;
+}
+
+.trim-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.trim-controls label {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+
+.trim-controls input[type="number"] {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100px;
+}
+
+.process-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.process-button:hover {
+    background-color: #218838;
+}
+
+.process-button:disabled {
+    background-color: #c3e6cb;
+    cursor: not-allowed;
+}
+
+.error {
+    color: #dc3545;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.video-container {
+    margin-top: 20px;
+}
+
+video {
+    max-width: 100%;
+    height: auto;
+}

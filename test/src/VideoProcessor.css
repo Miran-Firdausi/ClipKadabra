@@ -1,0 +1,76 @@
+/* src/VideoProcessor.css */
+
+.video-processor {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+input[type="file"] {
+    display: none; /* Hide the default file input */
+}
+
+.select-button, .process-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.select-button {
+    background-color: #007bff;
+}
+
+.select-button:hover {
+    background-color: #0056b3;
+}
+
+.process-button {
+    background-color: #28a745;
+}
+
+.process-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.process-button:hover:not(:disabled) {
+    background-color: #218838;
+}
+
+p {
+    margin: 10px 0;
+}
+
+.error {
+    color: red;
+}
+
+.video-container {
+    margin-top: 20px;
+}
+
+video {
+    width: 100%;
+    max-width: 800px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
