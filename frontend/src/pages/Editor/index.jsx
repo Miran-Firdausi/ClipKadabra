@@ -20,9 +20,12 @@ const Editor = () => {
               Add video to the timeline to see the preview
             </div>
           )}
+          
           <Timeline />
+          
         </div>
       </div>
+      
     </SelectedAssetsProvider>
   );
 };
