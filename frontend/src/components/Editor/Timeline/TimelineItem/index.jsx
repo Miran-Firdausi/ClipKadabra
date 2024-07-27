@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import DualHandleSlider from "../../DualHandleSlider";
 import "./index.css";
 
-const TimelineItem = ({ item, index, updateTimelineItem, isActive, onClick }) => {
+const TimelineItem = ({ item, index, updateTimelineItem, isActive, onClick, deleteTimelineItem, shiftLeft, shiftRight }) => {
   const [frames, setFrames] = useState([]);
   const [videoDuration, setVideoDuration] = useState(1);
   const [trimStart, setTrimStart] = useState(0);
@@ -31,6 +31,7 @@ const TimelineItem = ({ item, index, updateTimelineItem, isActive, onClick }) =>
 
       video.pause();
 
+
       for (let time = 0; time < video.duration; time += video.duration / 8) {
         video.currentTime = time;
         await new Promise((resolve) => (video.onseeked = resolve));
@@ -48,6 +49,10 @@ const TimelineItem = ({ item, index, updateTimelineItem, isActive, onClick }) =>
 
   const handleTrimConfirm = () => {
     updateTimelineItem(index, { ...item, startTime: trimStart, duration: trimEnd - trimStart });
+  };
+
+  const handleDelete = () => {
+    deleteTimelineItem(index);
   };
 
   return (
@@ -78,6 +83,9 @@ const TimelineItem = ({ item, index, updateTimelineItem, isActive, onClick }) =>
               }}
             />
             <button onClick={handleTrimConfirm}>Confirm Trim</button>
+            <button onClick={handleDelete}>Delete</button>
+            <button onClick={shiftLeft}>Shift Left</button>
+            <button onClick={shiftRight}>Shift Right</button>
           </div>
         )}
       </div>

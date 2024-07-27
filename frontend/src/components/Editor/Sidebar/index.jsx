@@ -10,7 +10,6 @@ import "./index.css";
 const Sidebar = ({ setSelectedVideo }) => {
   const [activeTab, setActiveTab] = useState("assets");
 
-  const { setSelectedAssets } = useSelectedAssets();
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -25,7 +24,7 @@ const Sidebar = ({ setSelectedVideo }) => {
       case "export":
         return <Export />;
       default:
-        return <Assets setSelectedVideo={setSelectedVideo} />;
+        return <Assets />;
     }
   };
 

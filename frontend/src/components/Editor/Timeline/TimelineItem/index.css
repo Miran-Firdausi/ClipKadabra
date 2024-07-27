@@ -3,7 +3,7 @@
   flex-direction: column;
   cursor: pointer;
   min-width: 600px;
-
+  max-width: 600px;
 }
 
 .video-preview-container {

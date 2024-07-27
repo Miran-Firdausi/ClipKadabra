@@ -6,7 +6,7 @@ import "./index.css";
 
 const Assets = () => {
   const [assets, setAssets] = useState([]);
-  const { setSelectedAssets } = useSelectedAssets();
+  const { selectedAssets, setSelectedAssets } = useSelectedAssets();
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
@@ -52,7 +52,7 @@ const Assets = () => {
               )}
               <div className="overlay">
                 <button
-                  onClick={() => handleAddToTimeline(asset)} // Change: Add asset to timeline
+                  onClick={() => handleAddToTimeline(asset)} 
                   className="icon-button"
                 >
                   <FontAwesomeIcon icon={faPlus} />
@@ -65,7 +65,7 @@ const Assets = () => {
                 </button>
               </div>
             </div>
-            <p>{asset.name}</p>
+            <p className="asset-name-cnt">{asset.name}</p>
           </div>
         ))}
       </div>

@@ -12,8 +12,31 @@ const Timeline = () => {
       (sum, asset) => sum + asset.duration,
       0,
     );
-    const newAsset = { ...asset, startTime, duration: 10 }; // default duration for new items
+    const newAsset = { ...asset, startTime, duration: 10 }; 
     setSelectedAssets([...selectedAssets, newAsset]);
+  };
+
+  const deleteTimelineItem = (index) => {
+    setSelectedAssets(selectedAssets.filter((_, i) => i !== index));
+  };
+
+  const shiftLeft = (index) => {
+    if (index > 0) {
+      const newAssets = [...selectedAssets];
+      [newAssets[index - 1], newAssets[index]] = [newAssets[index], newAssets[index - 1]];
+      setSelectedAssets(newAssets);
+      console.log(selectedAssets)
+    }
+  };
+
+  const shiftRight = (index) => {
+    if (index < selectedAssets.length - 1) {
+      const newAssets = [...selectedAssets];
+      [newAssets[index], newAssets[index + 1]] = [newAssets[index + 1], newAssets[index]];
+      setSelectedAssets(newAssets);
+      console.log(selectedAssets)
+
+    }
   };
 
   useEffect(() => {
@@ -44,6 +67,9 @@ const Timeline = () => {
               newAssets[index] = updatedItem;
               setSelectedAssets(newAssets);
             }}
+            deleteTimelineItem={deleteTimelineItem}
+            shiftLeft={() => shiftLeft(index)}
+            shiftRight={() => shiftRight(index)}
           />
         ))}
       </div>
