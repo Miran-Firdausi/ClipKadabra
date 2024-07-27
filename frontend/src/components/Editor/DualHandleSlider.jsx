@@ -1,7 +1,9 @@
+// src/components/DualHandleSlider/DualHandleSlider.jsx
+
 import React, { useState, useEffect } from 'react';
 import { Range, getTrackBackground } from 'react-range';
 
-const DualHandleSlider = ({ maxLimit }) => {
+const DualHandleSlider = ({ maxLimit, onChange }) => {
   const [values, setValues] = useState([0, maxLimit]);
   const min = 0;
 
@@ -10,7 +12,9 @@ const DualHandleSlider = ({ maxLimit }) => {
     setValues([values[0], maxLimit]);
   }, [maxLimit]);
 
-  console.log("max:", maxLimit);
+  useEffect(() => {
+    onChange({ min: values[0], max: values[1] });
+  }, [values, onChange]);
 
   return (
     <div>
