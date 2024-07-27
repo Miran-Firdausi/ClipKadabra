@@ -32,7 +32,7 @@ const Timeline = () => {
           />
         ))}
         <div className="time-intervals">
-          {[...Array(30).keys()].map((time) => (
+          {[...Array(300).keys()].map((time) => (
             <div key={time} className="time-interval">
               {time}s
             </div>
