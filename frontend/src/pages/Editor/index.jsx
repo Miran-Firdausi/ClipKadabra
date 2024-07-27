@@ -13,13 +13,8 @@ const Editor = () => {
       <div className="editor-page">
         <Sidebar setSelectedAssets={setSelectedAssets} />
         <div className="main-editor">
-          {selectedAssets.length ? (
+
             <VideoPlayer assets={selectedAssets} />
-          ) : (
-            <div className="placeholder">
-              Add video to the timeline to see the preview
-            </div>
-          )}
           
           <Timeline />
           
