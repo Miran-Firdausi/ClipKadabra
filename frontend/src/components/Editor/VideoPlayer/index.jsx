@@ -44,6 +44,8 @@ const VideoPlayer = () => {
     setVolume(newVolume);
   };
 
+  console.log("rendered")
+
   return (
     <div className="video-player">
       <div className="video-container">
