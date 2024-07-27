@@ -17,8 +17,10 @@ const Editor = () => {
             <VideoPlayer assets={selectedAssets} />
           
           <Timeline />
+          
         </div>
       </div>
+      
     </SelectedAssetsProvider>
   );
 };

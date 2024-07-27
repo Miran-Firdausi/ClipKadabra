@@ -1,0 +1,25 @@
+.slider {
+    position: relative;
+    width: 300px;
+    height: 10px;
+    background: #ddd;
+    width: 100%;
+
+  }
+  .slider .track {
+    position: absolute;
+    height: 100%;
+    background: #3b5998;
+    z-index: 1;
+  }
+  .slider .thumb {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid #3b5998;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+  }
+  
