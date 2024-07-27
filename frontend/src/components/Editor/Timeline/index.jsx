@@ -1,10 +1,11 @@
+// Timeline.js
 import React, { useState, useEffect } from "react";
 import "./index.css";
 import TimelineItem from "./TimelineItem";
 import { useSelectedAssets } from "@/context/SelectedAssetsContext";
 
 const Timeline = () => {
-  const { selectedAssets, setSelectedAssets } = useSelectedAssets();
+  const { selectedAssets, setSelectedAssets, setCurrentIndex } = useSelectedAssets();
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleAddToTimeline = (asset) => {
@@ -18,6 +19,7 @@ const Timeline = () => {
 
   const deleteTimelineItem = (index) => {
     setSelectedAssets(selectedAssets.filter((_, i) => i !== index));
+    setCurrentIndex(0); // Reset currentIndex to 0 after deleting
   };
 
   const shiftLeft = (index) => {
@@ -25,7 +27,7 @@ const Timeline = () => {
       const newAssets = [...selectedAssets];
       [newAssets[index - 1], newAssets[index]] = [newAssets[index], newAssets[index - 1]];
       setSelectedAssets(newAssets);
-      console.log(selectedAssets)
+      setCurrentIndex(0); // Reset currentIndex to 0 after shifting
     }
   };
 
@@ -34,8 +36,7 @@ const Timeline = () => {
       const newAssets = [...selectedAssets];
       [newAssets[index], newAssets[index + 1]] = [newAssets[index + 1], newAssets[index]];
       setSelectedAssets(newAssets);
-      console.log(selectedAssets)
-
+      setCurrentIndex(0); // Reset currentIndex to 0 after shifting
     }
   };
 
