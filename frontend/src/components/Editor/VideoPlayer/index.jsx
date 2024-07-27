@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 import { useSelectedAssets } from "@/context/SelectedAssetsContext";
 import "./index.css";
 
@@ -9,45 +9,49 @@ const VideoPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
   const { selectedAssets } = useSelectedAssets();
+  const [videoSrc, setVideoSrc] = useState(null); // Added state for video source
 
   useEffect(() => {
-    if (videoSrc) {
-      videoRef.current.load();
-      setIsPlaying(false);
+    if (selectedAssets.length > 0) {
+      // Find the first video asset
+      const videoAsset = selectedAssets.find(asset => asset.type.startsWith("video"));
+      if (videoAsset) {
+        setVideoSrc(videoAsset.url);
+      } else {
+        setVideoSrc(null);
+      }
+    } else {
+      setVideoSrc(null);
     }
-  }, [videoSrc]);
+  }, [selectedAssets]); // Update videoSrc when selectedAssets change
 
   const handlePlayPause = () => {
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
-      videoRef.current.play();
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
     }
-    setIsPlaying(!isPlaying);
   };
 
   const handleVolumeChange = (event) => {
     const newVolume = event.target.value;
-    videoRef.current.volume = newVolume;
+    if (videoRef.current) {
+      videoRef.current.volume = newVolume;
+    }
     setVolume(newVolume);
   };
 
   return (
     <div className="video-player">
       <div className="video-container">
-        {selectedAssets.length > 0 ? (
-          selectedAssets.map((asset, index) => (
-            <div key={index}>
-              {asset.type.startsWith("image") ? (
-                <img src={asset.url} alt={asset.name} />
-              ) : (
-                <video ref={videoRef} className="video" controls={false}>
-                  {videoSrc && <source src={videoSrc} type="video/mp4" />}
-                  Your browser does not support the video tag.
-                </video>
-              )}
-            </div>
-          ))
+        {videoSrc ? (
+          <video ref={videoRef} className="video" controls={false}>
+            <source src={videoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         ) : (
           <div className="placeholder">
             Add video to the timeline to see the preview
@@ -57,7 +61,7 @@ const VideoPlayer = () => {
 
       <div className="controls">
         <button onClick={handlePlayPause} className="control-button">
-          {isPlaying ? <FontAwesomeIcon icon={faPlay} /> : "Play"}
+          {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
         </button>
         <div className="volume-control">
           <label htmlFor="volume">Volume</label>
