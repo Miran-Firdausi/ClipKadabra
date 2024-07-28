@@ -1,9 +1,15 @@
 .feature-card {
-  background-color: #3c3c3c;
-  border-radius: 8px;
+  background-color: #2e2e2e;
+  border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 24px;
   text-align: center;
+  min-height: 250px;
+  display: flex;
+  padding: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .feature-card h3 {
@@ -14,7 +20,7 @@
 }
 
 .feature-card p {
-  color: var(--secondary-text);
+  color: #e7e7e7;
   font-size: 1rem;
   line-height: 1.5;
 }
