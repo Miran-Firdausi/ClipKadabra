@@ -6,6 +6,7 @@ import Audio from "./Tabs/Audio";
 import Export from "./Tabs/Export";
 import AI from "./Tabs/AI";
 import "./index.css";
+import Transitions from "./Tabs/Transition";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState("assets");
@@ -14,6 +15,8 @@ const Sidebar = () => {
     switch (activeTab) {
       case "assets":
         return <Assets />;
+      case "transitions":
+        return <Transitions />;
       case "effects":
         return <Effects />;
       case "text":
