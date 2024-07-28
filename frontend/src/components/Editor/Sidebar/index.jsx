@@ -4,11 +4,11 @@ import Effects from "./Tabs/Effects";
 import Text from "./Tabs/Text";
 import Audio from "./Tabs/Audio";
 import Export from "./Tabs/Export";
+import AI from "./Tabs/AI";
 import "./index.css";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState("assets");
-
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -22,6 +22,8 @@ const Sidebar = () => {
         return <Audio />;
       case "export":
         return <Export />;
+      case "AI":
+        return <AI />;
       default:
         return <Assets />;
     }
@@ -65,6 +67,12 @@ const Sidebar = () => {
           className={activeTab === "export" ? "active" : ""}
         >
           Export
+        </button>
+        <button
+          onClick={() => setActiveTab("AI")}
+          className={activeTab === "AI" ? "active" : ""}
+        >
+          AI
         </button>
       </div>
       <div className="tab-content">{renderTabContent()}</div>
