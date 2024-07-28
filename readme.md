@@ -101,4 +101,6 @@ We welcome contributions to improve Clip Kadabra! If you'd like to contribute, p
 4. Push your changes to your forked repository.
 5. Open a pull request to the main repository.
 
+### License
 
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
