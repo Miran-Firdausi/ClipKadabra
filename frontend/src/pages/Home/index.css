@@ -80,6 +80,7 @@
 .about {
   text-align: center;
   padding: 60px 0;
+  margin: 0 auto;
 }
 
 .about h2 {
@@ -91,6 +92,8 @@
   font-size: 1.2rem;
   line-height: 1.6;
   color: #ccc;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .buttons {
