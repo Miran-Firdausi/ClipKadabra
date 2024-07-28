@@ -6,8 +6,8 @@ import "./index.css";
 
 
 const Assets = () => {
-  const [assets, setAssets] = useState([]);
-  const { setSelectedAssets } = useSelectedAssets();
+  const [audios, setAudios] = useState([]);
+  const { setSelectedAudios } = useSelectedAssets();
   useEffect(() => {
     const fetchAudioFiles = async () => {
       const audioFiles = [
@@ -16,8 +16,8 @@ const Assets = () => {
         { name: "Lofi Study", url: "/audios/lofi-study-112191.mp3", type: "audio/mp3" },
         { name: "Once In Paris", url: "/audios/once-in-paris-168895.mp3", type: "audio/mp3" },
       ];
-      setAssets(audioFiles.map(asset => ({
-        ...asset,
+      setAudios(audioFiles.map(audio => ({
+        ...audio,
         gradient: getRandomGradient() 
       })));
     };
@@ -38,22 +38,22 @@ const Assets = () => {
 
   const handleFileChange = (event) => {
     const files = Array.from(event.target.files);
-    const newAssets = files.map((file) => ({
+    const newAudios = files.map((file) => ({
       name: file.name,
       url: URL.createObjectURL(file),
       type: file.type,
       gradient: getRandomGradient()
     }));
-    setAssets([...assets, ...newAssets]);
+    setAudios([...audios, ...newAudios]);
   };
 
-  const handleAddToTimeline = (asset) => {
-    setSelectedAssets((prevAssets) => [...prevAssets, asset]);
+  const handleAddToTimeline = (audio) => {
+    setSelectedAudios((prevAudios) => [...prevAudios, audio]);
   };
 
   const handleDeleteAsset = (index) => {
-    const updatedAssets = assets.filter((_, i) => i !== index);
-    setAssets(updatedAssets);
+    const updatedAudios = audios.filter((_, i) => i !== index);
+    setAudios(updatedAudios);
   };
 
   return (
@@ -71,7 +71,7 @@ const Assets = () => {
         </span>
       </button>
       <div className="asset-list">
-        {assets.map((asset, index) => (
+        {audios.map((asset, index) => (
           <div key={index} className="asset-item" style={{ background: asset.gradient }}>
             <div className="thumbnail">
               {asset.type.startsWith("image") ? (
