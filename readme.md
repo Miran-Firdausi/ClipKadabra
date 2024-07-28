@@ -56,8 +56,8 @@ Ensure you have the following installed on your system:
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/clip-kadabra.git
-cd clip-kadabra
+git clone git@github.com:Miran-Firdausi/ClipKadabra.git
+cd ClipKadabra
 ```
 
 #### 2. Setup the Backend
