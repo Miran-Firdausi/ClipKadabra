@@ -7,6 +7,7 @@ export const useSelectedAssets = () => useContext(SelectedAssetsContext);
 
 export const SelectedAssetsProvider = ({ children }) => {
   const [selectedAssets, setSelectedAssets] = useState([]);
+  const [selectedAudios, setSelectedAudios] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalDuration, setTotalDuration] = useState(10);
   const [timeIntervals, setTimeIntervals] = useState([]);
@@ -24,7 +25,9 @@ export const SelectedAssetsProvider = ({ children }) => {
         timeIntervals,
         setTimeIntervals,
         currentTime,
-        setCurrentTime
+        setCurrentTime,
+        selectedAudios,
+        setSelectedAudios,
       }}
     >
       {children}
