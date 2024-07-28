@@ -1,0 +1,135 @@
+.hero {
+  background: #282c34;
+  color: white;
+  height: calc(100vh - 60px);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-heading {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.clip-kadabra {
+  font-weight: bold;
+  background: linear-gradient(to right, #ff512f, #f09819);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: 24px;
+  margin: 20px 0 40px 0;
+}
+
+.features {
+  padding: 60px 0;
+  text-align: center;
+}
+
+.features-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.about,
+.contact {
+  padding: 60px 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.footer {
+  background: #282c34;
+  color: white;
+  padding: 20px 0;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.about {
+  text-align: center;
+  padding: 60px 0;
+  margin: 0 auto;
+}
+
+.about h2 {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.about p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #ccc;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.btn-primary {
+  background-color: #ff512f;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #e54620;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #ff512f;
+  border: 2px solid #ff512f;
+  padding: 15px 30px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #ff512f;
+  color: #fff;
+}

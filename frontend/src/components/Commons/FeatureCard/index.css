@@ -1,0 +1,20 @@
+.feature-card {
+  background-color: #3c3c3c;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  text-align: center;
+}
+
+.feature-card h3 {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.feature-card p {
+  color: var(--secondary-text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
