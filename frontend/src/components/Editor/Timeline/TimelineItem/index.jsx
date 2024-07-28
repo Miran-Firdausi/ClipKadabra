@@ -17,7 +17,7 @@ const TimelineItem = ({
   shiftRight,
 }) => {
   const [frames, setFrames] = useState([]);
-  const [videoDuration, setVideoDuration] = useState(1);
+  const [duration, setDuration] = useState(1);
   const [trimStart, setTrimStart] = useState(0);
   const [trimEnd, setTrimEnd] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -35,6 +35,17 @@ const TimelineItem = ({
     loadFFmpeg();
   }, []);
 
+  const setAudioDuration = async (audioUrl) => {
+    const audio = new Audio(audioUrl);
+    await new Promise((resolve) => {
+      audio.onloadedmetadata = () => {
+        setDuration(audio.duration);
+        setTrimEnd(audio.duration);
+        resolve();
+      };
+    });
+  };
+
   useEffect(() => {
     const extractFrames = async (videoUrl) => {
       const video = document.createElement("video");
@@ -45,7 +56,7 @@ const TimelineItem = ({
         video.onloadedmetadata = resolve;
       });
 
-      setVideoDuration(video.duration);
+      setDuration(video.duration);
       setTrimEnd(video.duration);
 
       await video.play();
@@ -70,6 +81,8 @@ const TimelineItem = ({
 
     if (item.type.startsWith("video")) {
       extractFrames(item.url);
+    } else if (item.type.startsWith("audio")) {
+      setAudioDuration(item.url);
     }
   }, [item.url, item.type]);
 
@@ -82,22 +95,22 @@ const TimelineItem = ({
       const data = await fetchFile(item.url);
 
       const trimDuration = trimEnd - trimStart;
+      const outputName = item.type.startsWith("video") ? 'trimmed_output.mp4' : 'trimmed_output.mp3';
 
       await ffmpeg.writeFile(item.name, new Uint8Array(data));
       await ffmpeg.exec([
         '-i', item.name,
         '-ss', trimStart.toFixed(2),
         '-t', trimDuration.toFixed(2),
-        '-c:v', 'libx264',
-        '-c:a', 'aac',
+        item.type.startsWith("video") ? '-c:v' : '-c:a', item.type.startsWith("video") ? 'libx264' : 'copy',
         '-strict', 'experimental',
-        'trimmed_output.mp4'
+        outputName
       ]);
 
-      const outputData = await ffmpeg.readFile('trimmed_output.mp4');
-      const videoBlob = new Blob([outputData.buffer], { type: 'video/mp4' });
+      const outputData = await ffmpeg.readFile(outputName);
+      const blobType = item.type.startsWith("video") ? 'video/mp4' : 'audio/mpeg';
+      const videoBlob = new Blob([outputData.buffer], { type: blobType });
       const url = URL.createObjectURL(videoBlob);
-
       updateTimelineItem({ ...item, url, startTime: trimStart, duration: trimDuration });
     } catch (err) {
       setError('An error occurred while processing the video.');
@@ -117,26 +130,30 @@ const TimelineItem = ({
       className="timeline-item"
       style={{
         left: `${item.startTime * 10}px`,
-        minWidth: videoDuration * 100 + `px`,
-        maxWidth: videoDuration * 100 + `px`,
+        minWidth: duration * 100 + `px`,
+        maxWidth: duration * 100 + `px`,
       }}
       onClick={() => onClick(index)}
     >
       <div className="video-preview-container">
         <div className="video-item">
-          {frames.map((frame, idx) => (
-            <img
-              key={idx}
-              src={frame}
-              alt={`frame-${idx}`}
-              style={{ width: `${100 / frames.length}%` }}
-            />
-          ))}
+          {item.type.startsWith("video") ? (
+            frames.map((frame, idx) => (
+              <img
+                key={idx}
+                src={frame}
+                alt={`frame-${idx}`}
+                style={{ width: `${100 / frames.length}%` }}
+              />
+            ))
+          ) : (
+            <div className="audio-placeholder">{item.name}</div>
+          )}
         </div>
         {isActive && (
           <div className="trim-controls">
             <DualHandleSlider
-              maxLimit={videoDuration}
+              maxLimit={duration}
               onChange={({ min, max }) => {
                 setTrimStart(min);
                 setTrimEnd(max);
