@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./index.css";
 
 function Header() {
@@ -13,9 +14,9 @@ function Header() {
             <li>
               <a href="#about">About</a>
             </li>
-            <li>
-              <a href="#contact">Contact</a>
-            </li>
+            <Link to="/editor" className="btn-nav-main">
+              Editor
+            </Link>
           </ul>
         </nav>
       </div>

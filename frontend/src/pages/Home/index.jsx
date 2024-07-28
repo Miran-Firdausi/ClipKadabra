@@ -1,6 +1,7 @@
 import Header from "@/components/Commons/Header";
 import Footer from "@/components/Commons/Footer";
 import FeatureCard from "@/components/Commons/FeatureCard";
+import { Link } from "react-router-dom";
 import "./index.css";
 
 function Home() {
@@ -18,9 +19,9 @@ function Home() {
               <a href="#features" className="btn-secondary">
                 Discover Features
               </a>
-              <a href="#features" className="btn-primary">
+              <Link to="/editor" className="btn-primary">
                 Start Editing
-              </a>
+              </Link>
             </div>
           </div>
         </section>
