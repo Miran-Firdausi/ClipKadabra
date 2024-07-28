@@ -1,5 +1,3 @@
-// src/components/Timeline/TimelineItem.jsx
-
 import React, { useEffect, useState, useRef } from "react";
 import DualHandleSlider from "../../DualHandleSlider";
 import coreURL from '@ffmpeg/core?url';
@@ -24,8 +22,18 @@ const TimelineItem = ({
   const [trimEnd, setTrimEnd] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [ffmpeg] = useState(() => new FFmpeg());
+  const [ffmpeg, setFFmpeg] = useState(null);
   const itemRef = useRef(null);
+
+  useEffect(() => {
+    const loadFFmpeg = async () => {
+      const ffmpegInstance = new FFmpeg();
+      await ffmpegInstance.load({ coreURL, wasmURL });
+      setFFmpeg(ffmpegInstance);
+    };
+
+    loadFFmpeg();
+  }, []);
 
   useEffect(() => {
     const extractFrames = async (videoUrl) => {
@@ -48,7 +56,7 @@ const TimelineItem = ({
 
       video.pause();
 
-      var numberOfFrames = video.duration*0.5
+      var numberOfFrames = video.duration * 0.5;
 
       for (let time = 0; time < video.duration; time += video.duration / numberOfFrames) {
         video.currentTime = time;
@@ -72,15 +80,10 @@ const TimelineItem = ({
       await ffmpeg.load({ coreURL, wasmURL });
 
       const data = await fetchFile(item.url);
-      console.log("executed1")
-
-      console.log("executed1.1")
-
 
       const trimDuration = trimEnd - trimStart;
 
       await ffmpeg.writeFile(item.name, new Uint8Array(data));
-      console.log("executed1.2")
       await ffmpeg.exec([
         '-i', item.name,
         '-ss', trimStart.toFixed(2),
@@ -88,15 +91,12 @@ const TimelineItem = ({
         '-c:v', 'libx264',
         '-c:a', 'aac',
         '-strict', 'experimental',
-        'output.mp4'
+        'trimmed_output.mp4'
       ]);
-      console.log("executed2")
 
-
-      const outputData = await ffmpeg.readFile('output.mp4');
+      const outputData = await ffmpeg.readFile('trimmed_output.mp4');
       const videoBlob = new Blob([outputData.buffer], { type: 'video/mp4' });
       const url = URL.createObjectURL(videoBlob);
-      console.log(url)
 
       updateTimelineItem({ ...item, url, startTime: trimStart, duration: trimDuration });
     } catch (err) {
