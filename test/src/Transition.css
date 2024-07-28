@@ -1,0 +1,38 @@
+.video-processor {
+    padding: 20px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.input-label {
+    display: flex;
+    align-items: center;
+}
+
+.select-button,
+.process-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.process-button {
+    background-color: #28a745;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.video-container {
+    margin-top: 20px;
+}
